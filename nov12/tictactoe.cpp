@@ -12,13 +12,27 @@ void TicTacToe::playGame(twoDGrid& ticTacToeGrid)
 		std::cout << "a_b_c" << std::endl; //doing this prevents user from having to say 0, 0 or 1, 2, etc.
 		std::cout << "d_e_f" << std::endl;
 		std::cout << "g_h_i" << std::endl;
+		
 		std::string playerXMove;
 		std::getline(std::cin, playerXMove);
 		updateGrid(ticTacToeGrid, playerXMove, "X");
 		moveCount = moveCount + 1;
+		
+		if (moveCount >= 5) //alternatively: moveCount > 4
+		{
+			isGameWon = checkForWin(ticTacToeGrid);
+
+			if (isGameWon == true)
+			{
+				break; 
+			}
+		}
+
+		
 		std::cout << " After player X makes a move, the grid looks like this: " << std::endl;
 		printTheGrid(ticTacToeGrid);
 		std::cout << std::endl << std::endl;
+		
 		std::cout << "Now player O" << std::endl;
 		std::string playerOMove;
 
@@ -81,7 +95,7 @@ void TicTacToe::updateGrid(twoDGrid& ticTacToeGrid, std::string theMove, std::st
 	}
 	else
 	{
-		std::cout << "Invalid move. You lose!. Muahahahahahahah" << std::endl;
+		std::cout << "Invalid move. lose turn" << std::endl;
 	}
 }
 
@@ -100,27 +114,6 @@ void TicTacToe::printTheGrid(twoDGrid& ticTacGrid)
 	}
 }
 
-bool TicTacToe::checkForWin(const twoDGrid& ticTacToeGrid)
-{
-	//ticTacToeGrid[0][0] = "X";
-	if (checkForHorizontalWin(ticTacToeGrid) == true)
-	{
-		return true;
-	}
-	else if (checkForVerticalWin(ticTacToeGrid) == true)
-	{
-		return true;
-	}
-	else if (checkForDiagonalWin(ticTacToeGrid) == true)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-	return false;
-}
 
 bool TicTacToe::checkForHorizontalWin(const twoDGrid& ticTacToeGrid)
 {
@@ -155,3 +148,26 @@ bool TicTacToe::checkForDiagonalWin(const twoDGrid& ticTacToeGrid)
 {
 	return false;
 }
+bool TicTacToe::checkForWin(const twoDGrid& ticTacToeGrid)
+{
+	//ticTacGrid[0][0] = "X"; //no bueno!
+
+	if (checkForHorizontalWin(ticTacToeGrid) == true)
+	{
+		return true;
+	}
+
+	else if (checkForVerticalWin(ticTacToeGrid) == true)
+	{
+		return true; 
+	}
+
+	else if (checkForDiagonalWin(ticTacToeGrid) == true)
+	{
+		return true; 
+	}
+
+	else
+	{
+		//what goes here? 
+		return false; 
